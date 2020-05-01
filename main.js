@@ -9,6 +9,7 @@ function setupCanvas() {
   }
   window.addEventListener('resize', resizeCanvas);
   resizeCanvas();
+  ctx.translate(canvas.width/2, canvas.height/2);
   return canvas
 }
 
@@ -32,10 +33,6 @@ function createObject (customValues) {
 
 function initGameObjects() {
   game.player = createObject({
-    position: {
-      x: canvas.width/2,
-      y: canvas.height/2
-    },
     size: 40
   });
 
@@ -43,8 +40,8 @@ function initGameObjects() {
   for (var i=0; i<100; i++) {
     game.backgroundStars.push(createObject({
       position: {
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
+        x: -canvas.width/2 + Math.random() * canvas.width,
+        y: -canvas.height/2 + Math.random() * canvas.height,
       },
       speed: {
         x: -2 + Math.random() * -5,
@@ -58,16 +55,16 @@ function updateObjects (objects) {
   for (var i=0; i<objects.length; i++) {
     var obj = objects[i];
     obj.position.x += obj.speed.x;
-    if (obj.position.x <= 0) {
-      obj.position.x = canvas.width;
-    } else if (obj.position.x >= canvas.width) {
-      obj.position.x = 0;
+    if (obj.position.x <= -canvas.width/2) {
+      obj.position.x = canvas.width/2;
+    } else if (obj.position.x > canvas.width/2) {
+      obj.position.x = -canvas.width/2;
     }
     obj.position.y += obj.speed.y;
-    if (obj.position.y <= 0) {
-      obj.position.y = canvas.height;
-    } else if (obj.position.y >= canvas.height) {
-      obj.position.y = 0;
+    if (obj.position.y <= -canvas.height/2) {
+      obj.position.y = canvas.height/2;
+    } else if (obj.position.y > canvas.height/2) {
+      obj.position.y = -canvas.height/2;
     }
   }
 }
@@ -95,13 +92,13 @@ function drawObjects(objects) {
 }
 
 function drawGame() {
-  var mainColor = '#ff6347'
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  var mainColor = '#ff6347';
+  ctx.rotate(0.1 * Math.PI / 180);
+  ctx.clearRect(-canvas.width/2, -canvas.height/2, canvas.width, canvas.height);
 
   ctx.globalCompositeOperation='source-over';
   ctx.fillStyle = mainColor;
-  ctx.fillRect(canvas.width/3, 0, canvas.width/3, canvas.height);
+  ctx.fillRect(-canvas.width/6, -canvas.height/2, canvas.width/3, canvas.height);
 
   ctx.globalCompositeOperation='xor';
   drawObjects(game.backgroundStars);
