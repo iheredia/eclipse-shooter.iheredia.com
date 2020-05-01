@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-require('express-ws')(app);
 
 const staticFiles = require('./static');
 app.use('/static', staticFiles);
