@@ -1,4 +1,4 @@
-const { files } = require('detalib');
+const { files } = process.env.DETA_EMULATED ? require('./mock-detalib') : require('detalib');
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
@@ -16,12 +16,6 @@ const getContentType = (filename) => {
   }
   return 'text/plain'
 }
-
-/*
-* TODO: Support folders
-* A request to /folder1/folder2/file.ext should
-* resolve to files.get('folder1/folder2/file.ext')
-*/
 
 router.get('/:filename', async (req, res) => {
   const { filename } = req.params;
