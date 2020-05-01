@@ -31,7 +31,6 @@ function createObject (customValues) {
 }
 
 function initGameObjects() {
-
   game.player = createObject({
     position: {
       x: canvas.width/2,
@@ -80,6 +79,21 @@ function updateGameState() {
   setTimeout(updateGameState, 10);
 }
 
+function drawObjects(objects) {
+  for (var i=0; i<objects.length; i++) {
+    var obj = objects[i];
+    ctx.beginPath();
+    ctx.arc(
+      obj.position.x,
+      obj.position.y,
+      obj.size,
+      0,
+      2 * Math.PI
+    );
+    ctx.fill();
+  }
+}
+
 function drawGame() {
   var mainColor = '#ff6347'
 
@@ -89,21 +103,9 @@ function drawGame() {
   ctx.fillStyle = mainColor;
   ctx.fillRect(canvas.width/3, 0, canvas.width/3, canvas.height);
 
-
   ctx.globalCompositeOperation='xor';
-  for (var i=0; i<game.backgroundStars.length; i++) {
-    var star = game.backgroundStars[i];
-    ctx.beginPath();
-    ctx.fillRect(star.position.x, star.position.y, star.size, star.size);
-    ctx.fill();
-  }
-
-  ctx.fillRect(
-    game.player.position.x - game.player.size/2,
-    game.player.position.y - game.player.size/2,
-    game.player.size,
-    game.player.size
-  );
+  drawObjects(game.backgroundStars);
+  drawObjects([game.player]);
 
   requestAnimationFrame(drawGame);
 }
@@ -119,6 +121,15 @@ function bindEvents() {
       game.player.speed.x = -5
     } else if (key === 'ArrowRight' || key === 'd') {
       game.player.speed.x = 5
+    }
+  });
+
+  window.addEventListener('keyup', function (event) {
+    var key = event.key;
+    if (key === 'ArrowUp' || key === 'w' || key === 'ArrowDown' || key === 's') {
+      game.player.speed.y = 0
+    } else if (key === 'ArrowLeft' || key === 'a' || key === 'ArrowRight' || key === 'd') {
+      game.player.speed.x = 0
     }
   });
 }
