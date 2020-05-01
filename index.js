@@ -1,14 +1,13 @@
 const express = require("express");
 const app = express();
+require('express-ws')(app);
 
 const staticFiles = require('./static');
-const layout = require('./layout');
-
 app.use('/static', staticFiles);
 
-app.get("/", (req, res) => {
-  res.send(layout({ body: '<h1>Hello world</h1>' }));
-});
+const fs = require('fs');
+const homeContent = fs.readFileSync('./index.html').toString();
+app.get("/", (req, res) => res.send(homeContent));
 
 app.get('*', (req, res) => res.send('Not found'))
 
