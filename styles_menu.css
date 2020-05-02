@@ -36,23 +36,21 @@ a {
     font-family : inherit;
     font-size: 1em;
     background: none;
-    color: white;
+    background: white;
+    color: #ff6347;
+    border-radius: 0.3em;
     border: none;
-    padding: 1em;
+    padding: 0.5em 1em;
     cursor: pointer;
     position: relative;
 }
 
-#start-button:hover:before {
-    content: '>';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    transform: translateY(-50%);
+#start-button:hover {
+    background: #f5f5f5;
 }
 
 #start-button:active {
-    color: #eee;
+    opacity: 0.8;
 }
 
 .game-active + #menu {
