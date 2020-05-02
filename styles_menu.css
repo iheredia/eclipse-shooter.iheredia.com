@@ -10,6 +10,7 @@
     text-align: center;
     width: 100vmin;
     transition: all 4s ease;
+    text-shadow: -1px 1px #ff6347, 1px 1px #ff6347, 1px -1px #ff6347, -1px -1px #ff6347;
 }
 
 h1 {
