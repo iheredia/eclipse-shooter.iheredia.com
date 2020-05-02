@@ -9,8 +9,6 @@
 
   function drawGame () {
     ctx.clearRect(-canvas.width/2, -canvas.height/2, canvas.width, canvas.height);
-    ctx.globalCompositeOperation='source-over';
-
     for (var i=0; i<drawRoutines.length; i++) {
       drawRoutines[i]();
     }

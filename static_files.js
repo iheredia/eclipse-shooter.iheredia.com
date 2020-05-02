@@ -6,6 +6,7 @@ const jsFiles = [
   'client_animation.js',
   'client_menu.js',
   'client_background.js',
+  'client_background_stars.js',
   'client_spaceship.js',
   'client_ui.js'
 ];
