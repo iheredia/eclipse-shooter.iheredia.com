@@ -26,7 +26,8 @@ html, body {
     -moz-osx-font-smoothing: grayscale;
     color: white;
     text-align: center;
-    width: 100vmin
+    width: 100vmin;
+    transition: all 4s ease;
 }
 
 h1 {
@@ -69,4 +70,9 @@ a {
 
 #start-button:active {
     color: #eee;
+}
+
+.game-active + #menu {
+    opacity: 0;
+    transform: translate(-50%, -70%);
 }

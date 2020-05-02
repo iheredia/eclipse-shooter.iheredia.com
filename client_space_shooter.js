@@ -21,3 +21,9 @@ function initGameObjects() {
     rotation: 0
   };
 }
+
+(function () {
+  window.addEventListener('game:start', function () {
+    console.log('game start');
+  });
+})();
