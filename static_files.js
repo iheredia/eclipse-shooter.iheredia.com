@@ -7,7 +7,8 @@ const jsFiles = [
   'client_menu.js',
   'client_space_shooter.js',
   'client_space_shooter_background.js',
-  'client_space_shooter_spaceship.js'
+  'client_space_shooter_spaceship.js',
+  'client_space_shooter_ui.js'
 ];
 let jsFilesContent = '';
 jsFiles.map(filename => {

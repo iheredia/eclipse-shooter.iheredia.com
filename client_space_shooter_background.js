@@ -7,7 +7,7 @@
     backgroundStars.push({
       position: {
         x: -canvas.width/2 + Math.random() * canvas.width,
-        y: -canvas.height/2 + Math.random() * canvas.height,
+        y: -canvas.height/2 + 100 + Math.random() * (canvas.height - 200),
       },
       speed: {
         x: -1 + Math.random() * -2,
