@@ -50,4 +50,22 @@
     setTimeout(updateBackgroundState, 10);
   }
   updateBackgroundState();
+
+  function updateStarsSpeed (increment) {
+    for (var i=0; i<100; i++) {
+      backgroundStars[i].speed.x += increment
+    }
+  }
+
+  window.addEventListener('game:start', function () {
+    var counter = 1000;
+    function increaseSpeed() {
+      updateStarsSpeed(-0.003);
+      counter--;
+      if (counter > 0) {
+        setTimeout(increaseSpeed, 10)
+      }
+    }
+    increaseSpeed();
+  });
 })();

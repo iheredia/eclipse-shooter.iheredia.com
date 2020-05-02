@@ -5,7 +5,7 @@
     startButton.disabled = true;
     canvas.classList.add('game-active');
 
-    var event = new Event('game:start');
+    var event = new CustomEvent('game:start');
     window.dispatchEvent(event);
   });
 })();
