@@ -15,7 +15,17 @@ jsFiles.map(filename => {
 });
 files.put('main.js', jsFilesContent);
 
-files.put('styles.css', fs.readFileSync('styles.css'))
+
+const cssFiles = [
+  'styles_main.css',
+  'styles_menu.css',
+  'styles_space_shooter.css'
+]
+let cssFilesContent = '';
+cssFiles.map(filename => {
+  cssFilesContent += fs.readFileSync(filename).toString();
+})
+files.put('styles.css', cssFilesContent)
 
 const homeContent = fs.readFileSync('./index.html').toString();
 
