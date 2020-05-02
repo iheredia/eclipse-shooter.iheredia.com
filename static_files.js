@@ -6,7 +6,8 @@ const jsFiles = [
   'client_animation.js',
   'client_menu.js',
   'client_space_shooter.js',
-  'client_space_shooter_background.js'
+  'client_space_shooter_background.js',
+  'client_space_shooter_spaceship.js'
 ];
 let jsFilesContent = '';
 jsFiles.map(filename => {
