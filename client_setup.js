@@ -8,9 +8,8 @@
   function resizeCanvas() {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
+    ctx.translate(canvas.width/2, canvas.height/2);
   }
   window.addEventListener('resize', resizeCanvas);
   resizeCanvas();
-
-  ctx.translate(canvas.width/2, canvas.height/2);
 })();
