@@ -49,6 +49,10 @@ function initGameObjects() {
       size: 1 + Math.random() * 3,
     }));
   }
+
+  game.context = {
+    rotation: 0
+  };
 }
 
 function updateObjects (objects) {
@@ -73,6 +77,7 @@ function updateGameState() {
   updateObjects(game.backgroundStars);
   updateObjects([game.player]);
 
+  game.context.rotation += 0.001;
   setTimeout(updateGameState, 10);
 }
 
@@ -93,16 +98,20 @@ function drawObjects(objects) {
 
 function drawGame() {
   var mainColor = '#ff6347';
-  ctx.rotate(0.1 * Math.PI / 180);
   ctx.clearRect(-canvas.width/2, -canvas.height/2, canvas.width, canvas.height);
 
+  // ctx.rotate(game.context.rotation);
   ctx.globalCompositeOperation='source-over';
   ctx.fillStyle = mainColor;
-  ctx.fillRect(-canvas.width/6, -canvas.height/2, canvas.width/3, canvas.height);
+  ctx.beginPath();
+  ctx.arc(0, 0, Math.min(canvas.width/2, canvas.height/2), 0, 2 * Math.PI);
+  ctx.fill();
 
   ctx.globalCompositeOperation='xor';
   drawObjects(game.backgroundStars);
   drawObjects([game.player]);
+
+  // ctx.rotate(-game.context.rotation);
 
   requestAnimationFrame(drawGame);
 }

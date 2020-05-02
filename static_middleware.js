@@ -1,12 +1,6 @@
 const { files } = process.env.DETA_EMULATED ? require('./mock-detalib') : require('detalib');
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
-
-['styles.css', 'main.js'].map(filename => {
-  const fileContent = fs.readFileSync(filename);
-  files.put(filename, fileContent)
-});
 
 const getContentType = (filename) => {
   if (filename.endsWith('.css')) {

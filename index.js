@@ -1,10 +1,9 @@
+const { homeContent } = require('./static_files');
 const express = require("express");
-const fs = require('fs');
-const staticFiles = require('./static');
+const staticFiles = require('./static_middleware');
 
 const app = express();
 
-const homeContent = fs.readFileSync('./index.html').toString();
 app.get("/", (req, res) => res.send(homeContent));
 
 app.use('/static', staticFiles);
