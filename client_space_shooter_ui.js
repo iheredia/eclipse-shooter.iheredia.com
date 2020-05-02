@@ -18,13 +18,11 @@
 
     var life = ['●', '●', '●'];
     window.addEventListener('game:space-shooter:change-life', function (e) {
-      const value = e.detail.increase
-      for (var i=0; i<Math.abs(value); i++) {
-        if (value > 0) {
-          life.push('●');
-        } else if (value < 0) {
-          life.pop();
-        }
+      const value = e.detail.life
+      console.log('changed life', value)
+      life = [];
+      for (var i=0; i<value; i++) {
+        life.push('●');
       }
       lifeContainer.textContent = life.join(' ');
     });
