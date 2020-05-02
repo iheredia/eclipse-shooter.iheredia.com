@@ -1,6 +1,6 @@
 (function () {
-  const startButton = document.querySelector('#start-button');
-  const canvas = document.querySelector('#main-canvas');
+  var startButton = document.querySelector('#start-button');
+  var canvas = document.querySelector('#main-canvas');
   startButton.addEventListener('click', function () {
     startButton.disabled = true;
     canvas.classList.add('game-active');

@@ -1,7 +1,13 @@
 const { files } = process.env.DETA_EMULATED ? require('./mock-detalib') : require('detalib');
 const fs = require('fs');
 
-const jsFiles = ['client_setup.js', 'client_menu.js', 'client_space_shooter.js']
+const jsFiles = [
+  'client_setup.js',
+  'client_animation.js',
+  'client_menu.js',
+  'client_space_shooter.js',
+  'client_space_shooter_background.js'
+];
 let jsFilesContent = '';
 jsFiles.map(filename => {
   jsFilesContent += fs.readFileSync(filename).toString();

@@ -75,4 +75,6 @@ a {
 .game-active + #menu {
     opacity: 0;
     transform: translate(-50%, -70%);
+    user-select: none;
+    pointer-events: none;
 }

@@ -1,42 +1,20 @@
-function updateGameState() {
-  updateObjects(game.backgroundStars);
-  updateObjects([game.player]);
+(function () {
+  var canvas = document.querySelector('#main-canvas');
+  var ctx = canvas.getContext('2d');
 
-  game.context.rotation += 0.001;
-  setTimeout(updateGameState, 10);
-}
+  var drawRoutines = []
+  window.addEventListener('game:draw-routine:add', function (e) {
+    drawRoutines.push(e.detail.routine);
+  })
 
-function drawObjects(objects) {
-  for (var i=0; i<objects.length; i++) {
-    var obj = objects[i];
-    ctx.beginPath();
-    ctx.arc(
-      obj.position.x,
-      obj.position.y,
-      obj.size,
-      0,
-      2 * Math.PI
-    );
-    ctx.fill();
+  function drawGame () {
+    ctx.clearRect(-canvas.width/2, -canvas.height/2, canvas.width, canvas.height);
+    ctx.globalCompositeOperation='source-over';
+
+    for (var i=0; i<drawRoutines.length; i++) {
+      drawRoutines[i]();
+    }
+    requestAnimationFrame(drawGame);
   }
-}
-
-function drawGame() {
-  var mainColor = '#ff6347';
-  ctx.clearRect(-canvas.width/2, -canvas.height/2, canvas.width, canvas.height);
-
-  // ctx.rotate(game.context.rotation);
-  ctx.globalCompositeOperation='source-over';
-  ctx.fillStyle = mainColor;
-  ctx.beginPath();
-  ctx.arc(0, 0, Math.min(canvas.width/2, canvas.height/2), 0, 2 * Math.PI);
-  ctx.fill();
-
-  ctx.globalCompositeOperation='xor';
-  drawObjects(game.backgroundStars);
-  drawObjects([game.player]);
-
-  // ctx.rotate(-game.context.rotation);
-
-  requestAnimationFrame(drawGame);
-}
+  drawGame();
+})();
