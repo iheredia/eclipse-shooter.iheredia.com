@@ -1,3 +1,6 @@
+// TODO: separate doomedShips and obstacles into other files
+// TODO: ensure doomedShips are removed from game after they die
+
 (function () {
   window.addEventListener('game:start', function () {
     var canvas = document.querySelector('#main-canvas');

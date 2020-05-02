@@ -2,6 +2,9 @@
   var canvas = document.querySelector('#main-canvas');
   var ctx = canvas.getContext('2d');
 
+  // TODO: mutate form and color of the background
+  // TODO: add some kind of eclipse?
+
   function drawRoutine() {
     ctx.globalCompositeOperation = 'source-over';
     ctx.fillStyle = '#ff6347';

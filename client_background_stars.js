@@ -10,7 +10,7 @@
         y: -canvas.height/2 + 100 + Math.random() * (canvas.height - 200),
       },
       speed: {
-        x: -1 + Math.random() * -2,
+        x: - Math.random(),
       },
       size: 1 + Math.random() * 3,
     });
@@ -18,7 +18,7 @@
 
   function drawRoutine() {
     ctx.fillStyle = '#ff6347';
-    ctx.globalCompositeOperation='xor';
+    ctx.globalCompositeOperation = 'xor';
     for (var i=0; i<backgroundStars.length; i++) {
       var star = backgroundStars[i];
       ctx.beginPath();
@@ -56,7 +56,7 @@
   window.addEventListener('game:start', function () {
     var counter = 1000;
     function increaseSpeed() {
-      updateStarsSpeed(-0.003);
+      updateStarsSpeed(-0.004);
       counter--;
       if (counter > 0) {
         setTimeout(increaseSpeed, 10)

@@ -1,5 +1,5 @@
-// TODO: always maintain a 16:9 aspect ratio for the main area of the game
 // TODO: canvas resolution should be independent from the display resolution
+// TODO: game units should be independent from canvas resolution
 
 (function () {
   var canvas = document.querySelector('#main-canvas');
