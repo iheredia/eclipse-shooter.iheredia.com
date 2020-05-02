@@ -1,5 +1,10 @@
 html, body {
-    font-family: sans-serif;
+    font-size: 20px;
+    font-family: monospace;
+}
+
+:focus {
+    outline: none;
 }
 
 #main-canvas {
@@ -8,4 +13,60 @@ html, body {
     height: 100%;
     top: 0;
     left: 0;
+    z-index: 1;
+}
+
+#menu {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: white;
+    text-align: center;
+    width: 100vmin
+}
+
+h1 {
+    font-size: 2em;
+    margin: 0 0 0.5em 0;
+}
+
+p {
+    margin: 1em 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+::selection {
+    background: rgba(255, 255, 255, 0.99);
+    color: #ff6347;
+}
+
+#start-button {
+    font-family : inherit;
+    font-size: 1em;
+    background: none;
+    color: white;
+    border: none;
+    padding: 1em;
+    cursor: pointer;
+    position: relative;
+}
+
+#start-button:hover:before {
+    content: '>';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+#start-button:active {
+    color: #eee;
 }
