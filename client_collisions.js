@@ -10,7 +10,6 @@
     obstacles = [];
   }
 
-  window.addEventListener('game:start', resetObjects);
   window.addEventListener('game:end', resetObjects);
 
   window.addEventListener('game:register-collision-objects', function (e) {
@@ -37,6 +36,10 @@
           if (ship.player) {
             var lifeChangeEvent = new CustomEvent('game:space-shooter:change-life', { detail: { life: ship.life } });
             window.dispatchEvent(lifeChangeEvent);
+            if (ship.life === 0) {
+              var gameEndEvent = new CustomEvent('game:end');
+              window.dispatchEvent(gameEndEvent);
+            }
           } else {
             ship.alive = false;
             ship.speed.x = -0.5;

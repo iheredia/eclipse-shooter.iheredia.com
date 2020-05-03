@@ -9,7 +9,7 @@
   })
 
   window.addEventListener('game:end', function() {
-    // TODO: improve. Show a game over menu
+    // TODO: improve. Show a game over menu or game won depending on event data
     window.addEventListener('keypress', startOnEnter);
     startButton.disabled = false;
     canvas.classList.remove('game-active');
