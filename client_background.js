@@ -1,19 +1,18 @@
+// TODO: mutate form and color of the background
+
 (function () {
   var canvas = document.querySelector('#main-canvas');
   var ctx = canvas.getContext('2d');
 
-  // TODO: mutate form and color of the background
-
   var circleRadius = Math.min(canvas.width/2, canvas.height/2);
-
-  var moon = {
-    x: circleRadius * 2 * Math.cos(Math.PI/4),
-    y: -circleRadius * 2 * Math.sin(Math.PI/4),
-    active: false,
-  }
+  var moon = { active: false };
   window.addEventListener('game:start-eclipse', function () {
     var endYPosition = circleRadius * 2 * Math.sin(Math.PI/4);
-    moon.active = true;
+    moon = {
+      x: circleRadius * 2 * Math.cos(Math.PI/4),
+      y: -circleRadius * 2 * Math.sin(Math.PI/4),
+      active: true,
+    }
     function moveMoon() {
       moon.x -= 0.05;
       moon.y += 0.05;
