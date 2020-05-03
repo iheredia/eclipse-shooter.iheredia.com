@@ -47,6 +47,7 @@
   function drawRoutine() {
     for (var j=0; j<doomedShips.length; j++) {
       var ship = doomedShips[j];
+      // TODO: the following lines keeps flagging because are exactly the same as in the main ship
       ctx.fillStyle = (ship.blinkCounter > 0 && ship.blinkCounter % 10 < 5) || (!ship.alive && ship.blinkCounter <= 0) ? 'transparent' : '#ff6347';
       ship.blinkCounter = ship.blinkCounter > 0 ? ship.blinkCounter - 1 : ship.blinkCounter;
       ctx.globalCompositeOperation='xor';
