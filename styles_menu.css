@@ -1,4 +1,4 @@
-#menu {
+.game-menu {
     position: fixed;
     left: 50%;
     top: 50%;
@@ -32,8 +32,8 @@ a {
     color: #ff6347;
 }
 
-#start-button {
-    font-family : inherit;
+button {
+    font-family: inherit;
     font-size: 1em;
     background: none;
     background: white;
@@ -45,15 +45,17 @@ a {
     position: relative;
 }
 
-#start-button:hover {
+button:hover {
     background: #f5f5f5;
 }
 
-#start-button:active {
+button:active {
     opacity: 0.8;
 }
 
-.game-active + #menu {
+.game-active ~ .game-menu,
+.game-inactive ~ #game-over-menu,
+.game-over ~ #start-menu {
     opacity: 0;
     transform: translate(-50%, -70%);
     user-select: none;

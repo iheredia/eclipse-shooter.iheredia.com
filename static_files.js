@@ -23,7 +23,7 @@ files.put('main.js', jsFilesContent);
 const cssFiles = [
   'styles_main.css',
   'styles_menu.css',
-  'styles_space_shooter.css'
+  'styles_space_shooter_ui.css'
 ]
 let cssFilesContent = '';
 cssFiles.map(filename => {

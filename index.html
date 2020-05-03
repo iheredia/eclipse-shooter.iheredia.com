@@ -9,8 +9,8 @@
     <link href="/static/styles.css" rel="stylesheet" />
 </head>
 <body>
-    <canvas id="main-canvas"></canvas>
-    <div id="menu">
+    <canvas id="main-canvas" class="game-inactive"></canvas>
+    <div id="start-menu" class="game-menu">
         <h1>DevHacks challenge</h1>
         <p>This game was made for the <a href="https://devhacks.deta.dev/" target="_blank">DevHacks challenge</a></p>
         <p>Source code can be found at <a href="https://github.com/iheredia/devhacks-challenge" target="_blank">github</a></p>
@@ -18,6 +18,11 @@
         <br />
         <p>Use the arrow keys or WASD to move</p>
         <button id="start-button">START</button>
+    </div>
+    <div id="game-over-menu" class="game-menu">
+        <h1>Game over</h1>
+        <p>You ended the game with score: <span id="game-over-score"></span></p>
+        <button id="restart-button">RESTART</button>
     </div>
     <!-- TODO: this elements can be created programatically when the game begins -->
     <div id="space-shooter-ui" class="hidden">

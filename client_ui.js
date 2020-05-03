@@ -2,6 +2,7 @@
   var UIContainer = document.querySelector('#space-shooter-ui');
   var scoreContainer = document.querySelector('#space-shooter-score');
   var lifeContainer = document.querySelector('#space-shooter-life');
+  var gameOverScoreContainer = document.querySelector('#game-over-score');
 
   var score;
   var autoIncrementeScoreTimeout;
@@ -31,11 +32,13 @@
   })
 
   window.addEventListener('game:end', function () {
+    gameOverScoreContainer.textContent = score.toString(16);
     UIContainer.classList.add('hidden');
     clearTimeout(autoIncrementeScoreTimeout);
   })
 
   window.addEventListener('game:space-shooter:controls-enable', function () {
+    // TODO: this keeps triggering after game ends. Fix
     UIContainer.classList.remove('hidden');
     autoIncrementScore()
   })
