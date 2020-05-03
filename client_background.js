@@ -3,9 +3,10 @@
 (function () {
   var canvas = document.querySelector('#main-canvas');
   var ctx = canvas.getContext('2d');
-
   var circleRadius = Math.min(canvas.width/2, canvas.height/2);
   var moon = { active: false };
+  var eclipseTimeout;
+
   window.addEventListener('game:start-eclipse', function () {
     var endYPosition = circleRadius * 2 * Math.sin(Math.PI/4);
     moon = {
@@ -17,12 +18,17 @@
       moon.x -= 0.05;
       moon.y += 0.05;
       if (moon.y < endYPosition) {
-        setTimeout(moveMoon, 10);
+        eclipseTimeout = setTimeout(moveMoon, 10);
       } else {
         moon.active = false;
       }
     }
     moveMoon();
+  });
+
+  window.addEventListener('game:end', function() {
+    clearTimeout(eclipseTimeout);
+    moon = { active: false };
   });
 
   function drawRoutine() {

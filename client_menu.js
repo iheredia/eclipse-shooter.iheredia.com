@@ -15,6 +15,7 @@
   window.addEventListener('game:end', function() {
     window.addEventListener('keypress', startOnEnter);
     restartButton.disabled = false;
+    canvas.classList.remove('game-inactive');
     canvas.classList.remove('game-active');
     canvas.classList.add('game-over');
   })

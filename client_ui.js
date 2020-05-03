@@ -4,7 +4,7 @@
   var lifeContainer = document.querySelector('#space-shooter-life');
   var gameOverScoreContainer = document.querySelector('#game-over-score');
 
-  var score;
+  var score = 0;
   var autoIncrementeScoreTimeout;
   function autoIncrementScore() {
     score += 1;
