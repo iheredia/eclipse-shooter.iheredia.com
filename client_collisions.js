@@ -25,7 +25,6 @@
           ship.life -= 1;
           ship.alive = ship.life > 0;
           ship.blinkCounter = 100;
-          console.log('collision');
           if (ship.player) {
             var lifeChangeEvent = new CustomEvent('game:space-shooter:change-life', { detail: { life: ship.life } });
             window.dispatchEvent(lifeChangeEvent);

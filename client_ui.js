@@ -1,4 +1,3 @@
-// TODO: debug weird flashy score counter
 // TODO: avoid having life characters in the index.html file
 
 (function () {
@@ -22,7 +21,6 @@
     var life = ['♥', '♥', '♥'];
     window.addEventListener('game:space-shooter:change-life', function (e) {
       const value = e.detail.life
-      console.log('changed life', value)
       life = [];
       for (var i=0; i<value; i++) {
         life.push('♥');
