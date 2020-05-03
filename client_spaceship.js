@@ -31,7 +31,7 @@
       var ship = ships[i];
       if (ship.visible) {
         ctx.fillStyle = '#ff6347';
-        ctx.globalCompositeOperation='xor';
+        ctx.globalCompositeOperation = 'xor';
         ctx.beginPath();
         ctx.ellipse(ship.position.x, ship.position.y, ship.size, ship.size/3, 0, 0, 2 * Math.PI);
         ctx.ellipse(ship.position.x - 10, ship.position.y - 10, ship.size, ship.size/3, 0, 0, 2 * Math.PI);

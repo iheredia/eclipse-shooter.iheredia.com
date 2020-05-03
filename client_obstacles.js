@@ -10,21 +10,21 @@
       {
         position: { x: canvas.width * 5, y: - 100 },
         speed: { x: -5 },
-        size: 30,
+        size: 20,
         rotation: 0,
         alive: true,
       },
       {
         position: { x: canvas.width * 5, y: 100 },
         speed: { x: -5 },
-        size: 30,
+        size: 20,
         rotation: 0,
         alive: true,
       },
       {
         position: { x: canvas.width * 8, y: 0 },
         speed: { x: -5 },
-        size: 30,
+        size: 20,
         rotation: 0,
         alive: true,
       }
@@ -35,7 +35,7 @@
 
   function setupEasyObstacles() {
     for (var i=0; i<200; i++) {
-      var size = 20 + Math.random() * 20;
+      var size = 10 + Math.random() * 15;
       activeObstacles.push({
         position: {
           x: canvas.width + Math.random() * canvas.width * 10,
@@ -95,18 +95,46 @@
     }
   }
 
+  function drawStar(obstacle) {
+    var centerX = obstacle.position.x;
+    var centerY = obstacle.position.y;
+    var spikes = 16;
+    var rotation = obstacle.rotation;
+    var step = Math.PI / spikes;
+    var innerRadius = obstacle.size * 2 / 3;
+    var outerRadius = obstacle.size;
+
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, innerRadius, 0, Math.PI * 2);
+    ctx.closePath();
+    ctx.fill();
+
+    var x = centerX;
+    var y = centerY;
+    ctx.beginPath();
+    ctx.moveTo(centerX + Math.cos(rotation) * outerRadius, centerY + Math.sin(rotation) * outerRadius)
+    for (var i = 0; i < spikes; i++) {
+      x = centerX + Math.cos(rotation) * outerRadius;
+      y = centerY + Math.sin(rotation) * outerRadius;
+      ctx.lineTo(x, y)
+      rotation += step
+
+      x = centerX + Math.cos(rotation) * innerRadius;
+      y = centerY + Math.sin(rotation) * innerRadius;
+      ctx.lineTo(x, y)
+      rotation += step
+    }
+    ctx.closePath();
+    ctx.fill();
+  }
+
   function drawRoutine() {
     if (activeObstacles && activeObstacles.length) {
       ctx.fillStyle = '#509EB8';
+      ctx.globalCompositeOperation = 'xor';
       for (var i=0; i<activeObstacles.length; i++) {
         var obstacle = activeObstacles[i];
-        ctx.translate(obstacle.position.x, obstacle.position.y);
-        ctx.rotate(Math.PI/4 + obstacle.rotation);
-        ctx.fillRect(-obstacle.size/2, -obstacle.size/2, obstacle.size, obstacle.size);
-        ctx.rotate(-Math.PI/4);
-        ctx.fillRect(-obstacle.size/2, -obstacle.size/2, obstacle.size, obstacle.size);
-        ctx.rotate(-obstacle.rotation);
-        ctx.translate(-obstacle.position.x, -obstacle.position.y);
+        drawStar(obstacle)
       }
     }
   }
