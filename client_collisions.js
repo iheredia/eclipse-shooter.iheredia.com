@@ -5,6 +5,14 @@
 
   var ships = [];
   var obstacles = [];
+  function resetObjects() {
+    ships = [];
+    obstacles = [];
+  }
+
+  window.addEventListener('game:start', resetObjects);
+  window.addEventListener('game:end', resetObjects);
+
   window.addEventListener('game:register-collision-objects', function (e) {
     if (e.detail.ships) {
       ships = ships.concat(e.detail.ships);
@@ -15,6 +23,7 @@
   });
 
   function checkForCollisions() {
+    // TODO: Check the logic of this function
     for (var i=0; i<ships.length; i++) {
       for (var j=0; j<obstacles.length; j++) {
         var ship = ships[i];
