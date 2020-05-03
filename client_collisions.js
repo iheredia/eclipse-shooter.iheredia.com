@@ -1,4 +1,5 @@
 (function () {
+  var canvas = document.querySelector('#main-canvas');
   var ships = [];
   var obstacles = [];
   function resetObjects() {
@@ -26,11 +27,15 @@
   var checkForCollisionsTimeout;
   function checkForCollisions() {
     for (var i=0; i<ships.length; i++) {
-      for (var j=0; j<obstacles.length; j++) {
-        var ship = ships[i];
-        var obstacle = obstacles[j];
-        if (collisionCheck(ship, obstacle) && ship.processCollision) {
-          ship.processCollision();
+      var ship = ships[i];
+      if (ship.alive) {
+        for (var j=0; j<obstacles.length; j++) {
+          var obstacle = obstacles[j];
+          if (-canvas.width < obstacle.position.x && obstacle.position.x < canvas.width) {
+            if (collisionCheck(ship, obstacle) && ship.processCollision) {
+              ship.processCollision();
+            }
+          }
         }
       }
     }
