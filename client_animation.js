@@ -6,7 +6,10 @@
 
   var drawRoutines = []
   window.addEventListener('game:draw-routine:add', function (e) {
-    drawRoutines.push(e.detail.routine);
+    var routine = e.detail.routine;
+    if (drawRoutines.indexOf(routine) === -1) {
+      drawRoutines.push(e.detail.routine);
+    }
   })
 
   function drawGame () {
