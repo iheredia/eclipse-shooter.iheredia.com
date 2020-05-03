@@ -6,9 +6,10 @@
   var ctx = canvas.getContext('2d');
 
   var activeObstacles;
-  var step;
+  var currentLevel;
+  var totalLevels = 8;
   function setInitialConditions() {
-    step = 'initial'
+    currentLevel = { iteration: 0, randomObstaclesAmount: 60, randomGroupsAmount: 0 };
     activeObstacles = [
       {
         position: { x: canvas.width * 5, y: - 100 },
@@ -94,9 +95,6 @@
     window.dispatchEvent(registerCollisionEvent);
   }
 
-  var currentLevel = { iteration: 0, randomObstaclesAmount: 60, randomGroupsAmount: 0 };
-  var totalLevels = 8;
-
   var updateStateTimeout;
   function updateState() {
     var allObstaclesWentBy = true;
@@ -108,7 +106,7 @@
     }
     if (allObstaclesWentBy && currentLevel.iteration < totalLevels) {
       currentLevel.iteration += 1;
-      currentLevel.randomObstaclesAmount += 40;
+      currentLevel.randomObstaclesAmount += 30;
       currentLevel.randomGroupsAmount += 10
       console.log(currentLevel);
       setupRandomObstacles(currentLevel.randomObstaclesAmount, currentLevel.randomGroupsAmount)
