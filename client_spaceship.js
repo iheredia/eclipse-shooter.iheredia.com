@@ -14,8 +14,10 @@
       player: true,
       alive: true,
     };
-    var lifeChangeEvent = new CustomEvent('game:register-collision-objects', { detail: { ships: [ship] } });
-    window.dispatchEvent(lifeChangeEvent);
+    var registerLifeEvent = new CustomEvent('game:space-shooter:change-life', { detail: { life: ship.life } });
+    window.dispatchEvent(registerLifeEvent);
+    var registerCollisionEvent = new CustomEvent('game:register-collision-objects', { detail: { ships: [ship] } });
+    window.dispatchEvent(registerCollisionEvent);
 
     function onKeyDown (event) {
       var key = event.key;

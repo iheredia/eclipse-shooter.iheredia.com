@@ -95,8 +95,8 @@
       }
       if (allObstaclesWentBy && obstaclesTemplates.length) {
         obstacles = obstaclesTemplates.shift();
-        var lifeChangeEvent = new CustomEvent('game:register-collision-objects', { detail: { obstacles: obstacles } });
-        window.dispatchEvent(lifeChangeEvent);
+        var registerCollisionEvent = new CustomEvent('game:register-collision-objects', { detail: { obstacles: obstacles } });
+        window.dispatchEvent(registerCollisionEvent);
       } else if (allObstaclesWentBy && obstaclesTemplates.length === 0) {
         console.log('All obstacles went by');
       }

@@ -21,8 +21,8 @@
         alive: true,
       }
     ];
-    var lifeChangeEvent = new CustomEvent('game:register-collision-objects', { detail: { ships: doomedShips } });
-    window.dispatchEvent(lifeChangeEvent);
+    var registerCollisionEvent = new CustomEvent('game:register-collision-objects', { detail: { ships: doomedShips } });
+    window.dispatchEvent(registerCollisionEvent);
 
     function updateState() {
       doomedShips[0].position.x += doomedShips[0].speed.x;
