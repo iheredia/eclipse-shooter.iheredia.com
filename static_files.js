@@ -8,6 +8,9 @@ const jsFiles = [
   'client_background.js',
   'client_background_stars.js',
   'client_spaceship.js',
+  'client_doomed_spaceships.js',
+  'client_obstacles.js',
+  'client_collisions.js',
   'client_ui.js'
 ];
 let jsFilesContent = '';
