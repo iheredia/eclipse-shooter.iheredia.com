@@ -9,9 +9,7 @@
         x: -canvas.width/2 + Math.random() * canvas.width,
         y: -canvas.height/2 + 100 + Math.random() * (canvas.height - 200),
       },
-      speed: {
-        x: - Math.random(),
-      },
+      speed: { x: - Math.random() },
       size: 1 + Math.random() * 3,
     });
   }
@@ -22,13 +20,7 @@
     for (var i=0; i<backgroundStars.length; i++) {
       var star = backgroundStars[i];
       ctx.beginPath();
-      ctx.arc(
-        star.position.x,
-        star.position.y,
-        star.size,
-        0,
-        2 * Math.PI
-      );
+      ctx.arc(star.position.x, star.position.y, star.size, 0, 2 * Math.PI);
       ctx.fill();
     }
   }

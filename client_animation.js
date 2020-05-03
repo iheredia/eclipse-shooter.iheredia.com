@@ -1,3 +1,5 @@
+// TODO: pause the game when it loses focus
+
 (function () {
   var canvas = document.querySelector('#main-canvas');
   var ctx = canvas.getContext('2d');
