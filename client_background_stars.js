@@ -4,12 +4,14 @@
   var backgroundStars = [];
 
   for (var i=0; i<100; i++) {
+    var initialSpeed = Math.random();
     backgroundStars.push({
       position: {
         x: -canvas.width/2 + Math.random() * canvas.width,
         y: -canvas.height/2 + 100 + Math.random() * (canvas.height - 200),
       },
-      speed: { x: - Math.random() },
+      initialSpeed: { x: -initialSpeed },
+      speed: { x: -initialSpeed },
       size: 1 + Math.random() * 3,
     });
   }
@@ -39,21 +41,43 @@
   }
   updateBackgroundState();
 
-  function updateStarsSpeed (increment) {
-    for (var i=0; i<100; i++) {
-      backgroundStars[i].speed.x += increment
-    }
-  }
+  var acceleration = 0.004;
+  var increaseSpeedTimeout;
+  var decreaseSpeedTimeout;
 
   window.addEventListener('game:start', function () {
-    var counter = 1000;
     function increaseSpeed() {
-      updateStarsSpeed(-0.004);
-      counter--;
-      if (counter > 0) {
-        setTimeout(increaseSpeed, 10)
+      var someStarChangedItsSpeed = false;
+      for (var i=0; i<backgroundStars.length; i++) {
+        var star = backgroundStars[i]
+        if (star.speed.x > star.initialSpeed.x - 4) {
+          star.speed.x -= acceleration;
+          someStarChangedItsSpeed = true;
+        }
+      }
+      if (someStarChangedItsSpeed) {
+        increaseSpeedTimeout = setTimeout(increaseSpeed, 10)
       }
     }
+    clearTimeout(decreaseSpeedTimeout);
     increaseSpeed();
+  });
+
+  window.addEventListener('game:end', function () {
+    function decreaseSpeed() {
+      var someStarChangedItsSpeed = false;
+      for (var i=0; i<backgroundStars.length; i++) {
+        var star = backgroundStars[i]
+        if (star.speed.x < star.initialSpeed.x) {
+          star.speed.x += acceleration;
+          someStarChangedItsSpeed = true;
+        }
+      }
+      if (someStarChangedItsSpeed) {
+        decreaseSpeedTimeout = setTimeout(decreaseSpeed, 10)
+      }
+    }
+    clearTimeout(increaseSpeedTimeout);
+    decreaseSpeed();
   });
 })();
