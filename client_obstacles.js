@@ -82,109 +82,20 @@
     return group;
   }
 
-  function setupSuperEasyObstacles() {
-    console.log('Super easy');
-    for (var i=0; i<100; i++) {
+  function setupRandomObstacles(randomObstaclesAmount, randomGroupsAmount) {
+    activeObstacles = []
+    for (var i=0; i<randomObstaclesAmount; i++) {
       activeObstacles.push(randomObstacle())
     }
-    var registerCollisionEvent = new CustomEvent('game:register-collision-objects', { detail: { obstacles: activeObstacles } });
-    window.dispatchEvent(registerCollisionEvent);
-  }
-
-  function setupEasyObstacles() {
-    console.log('Easy');
-    activeObstacles = []
-    for (var i=0; i<50; i++) {
+    for (var j=0; j<randomGroupsAmount; j++) {
       activeObstacles = activeObstacles.concat(randomGroup());
     }
     var registerCollisionEvent = new CustomEvent('game:register-collision-objects', { detail: { obstacles: activeObstacles } });
     window.dispatchEvent(registerCollisionEvent);
   }
 
-  function setupNormalObstacles() {
-    console.log('Normal');
-    activeObstacles = []
-    for (var i=0; i<200; i++) {
-      activeObstacles.push(randomObstacle())
-    }
-    for (var j=0; j<10; j++) {
-      activeObstacles = activeObstacles.concat(randomGroup());
-    }
-    var registerCollisionEvent = new CustomEvent('game:register-collision-objects', { detail: { obstacles: activeObstacles } });
-    window.dispatchEvent(registerCollisionEvent);
-  }
-
-  function setupMediumObstacles() {
-    console.log('Medium');
-    activeObstacles = []
-    for (var i=0; i<250; i++) {
-      activeObstacles.push(randomObstacle())
-    }
-    for (var j=0; j<20; j++) {
-      activeObstacles = activeObstacles.concat(randomGroup());
-    }
-    var registerCollisionEvent = new CustomEvent('game:register-collision-objects', { detail: { obstacles: activeObstacles } });
-    window.dispatchEvent(registerCollisionEvent);
-  }
-
-  function setupDifficultObstacles() {
-    console.log('Difficult');
-    activeObstacles = []
-    for (var i=0; i<300; i++) {
-      activeObstacles.push(randomObstacle())
-    }
-    for (var j=0; j<30; j++) {
-      activeObstacles = activeObstacles.concat(randomGroup());
-    }
-    var registerCollisionEvent = new CustomEvent('game:register-collision-objects', { detail: { obstacles: activeObstacles } });
-    window.dispatchEvent(registerCollisionEvent);
-  }
-
-  function setupSuperDifficultObstacles() {
-    console.log('Super difficult');
-    activeObstacles = []
-    for (var i=0; i<350; i++) {
-      activeObstacles.push(randomObstacle())
-    }
-    for (var j=0; j<40; j++) {
-      activeObstacles = activeObstacles.concat(randomGroup());
-    }
-    var registerCollisionEvent = new CustomEvent('game:register-collision-objects', { detail: { obstacles: activeObstacles } });
-    window.dispatchEvent(registerCollisionEvent);
-  }
-
-  function setupExtremeObstacles() {
-    console.log('Extreme');
-    activeObstacles = []
-    for (var i=0; i<400; i++) {
-      activeObstacles.push(randomObstacle())
-    }
-    for (var j=0; j<50; j++) {
-      activeObstacles = activeObstacles.concat(randomGroup());
-    }
-    var registerCollisionEvent = new CustomEvent('game:register-collision-objects', { detail: { obstacles: activeObstacles } });
-    window.dispatchEvent(registerCollisionEvent);
-  }
-
-  var nextStepFor = {
-    'initial': 'super-easy',
-    'super-easy': 'easy',
-    'easy': 'normal',
-    'normal': 'medium',
-    'medium': 'difficult',
-    'difficult': 'super-difficult',
-    'super-difficult': 'extreme',
-    'extreme': null
-  }
-  var setupStep = {
-    'super-easy': setupSuperEasyObstacles,
-    'easy': setupEasyObstacles,
-    'normal': setupNormalObstacles,
-    'medium': setupMediumObstacles,
-    'difficult': setupDifficultObstacles,
-    'super-difficult': setupSuperDifficultObstacles,
-    'extreme': setupExtremeObstacles,
-  };
+  var currentLevel = { iteration: 0, randomObstaclesAmount: 60, randomGroupsAmount: 0 };
+  var totalLevels = 8;
 
   var updateStateTimeout;
   function updateState() {
@@ -195,18 +106,23 @@
       obstacle.rotation += 0.01;
       allObstaclesWentBy = allObstaclesWentBy && obstacle.position.x < -canvas.width;
     }
-    if (allObstaclesWentBy) {
-      step = nextStepFor[step];
-      if (step) {
-        setupStep[step]();
+    if (allObstaclesWentBy && currentLevel.iteration < totalLevels) {
+      currentLevel.iteration += 1;
+      currentLevel.randomObstaclesAmount += 40;
+      currentLevel.randomGroupsAmount += 10
+      console.log(currentLevel);
+      setupRandomObstacles(currentLevel.randomObstaclesAmount, currentLevel.randomGroupsAmount)
+
+      if (currentLevel.iteration === 4) {
+        var eclipseEvent = new CustomEvent('game:start-eclipse');
+        window.dispatchEvent(eclipseEvent);
       }
     }
-    if (step) {
-      updateStateTimeout = setTimeout(updateState, 10);
+
+    if (currentLevel.iteration === totalLevels) {
+      // TODO: trigger game won event
     } else {
-      // TODO: trigger boss
-      var eclipseEvent = new CustomEvent('game:start-eclipse');
-      window.dispatchEvent(eclipseEvent);
+      updateStateTimeout = setTimeout(updateState, 10);
     }
   }
 
