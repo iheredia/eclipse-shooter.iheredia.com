@@ -26,9 +26,13 @@
     moveMoon();
   });
 
+  window.addEventListener('game:start', function() {
+    moon.active = false;
+  });
+
+
   window.addEventListener('game:end', function() {
     clearTimeout(eclipseTimeout);
-    moon = { active: false };
   });
 
   function drawRoutine() {
