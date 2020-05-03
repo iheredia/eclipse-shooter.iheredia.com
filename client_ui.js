@@ -8,7 +8,7 @@
   var autoIncrementeScoreTimeout;
   function autoIncrementScore() {
     score += 1;
-    scoreContainer.textContent = score.toString(16).split('').join(' ');
+    scoreContainer.textContent = score.toString().split('').join(' ');
     autoIncrementeScoreTimeout = setTimeout(autoIncrementScore, 100);
   }
 
@@ -32,13 +32,14 @@
   })
 
   window.addEventListener('game:end', function () {
-    gameOverScoreContainer.textContent = score.toString(16);
+    gameOverScoreContainer.textContent = score.toString();
     UIContainer.classList.add('hidden');
     clearTimeout(autoIncrementeScoreTimeout);
   })
 
   window.addEventListener('game:space-shooter:controls-enable', function () {
     // TODO: this keeps triggering after game ends. Fix
+    clearTimeout(autoIncrementeScoreTimeout);
     UIContainer.classList.remove('hidden');
     autoIncrementScore()
   })

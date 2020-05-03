@@ -8,7 +8,8 @@ const jsFiles = [
   'client_background.js',
   'client_background_stars.js',
   'client_spaceship.js',
-  'client_doomed_spaceships.js',
+  'client_spaceship_player.js',
+  'client_spaceship_doomed.js',
   'client_obstacles.js',
   'client_collisions.js',
   'client_ui.js'

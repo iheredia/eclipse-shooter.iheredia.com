@@ -12,14 +12,6 @@
     }
   })
 
-  window.addEventListener('game:draw-routine:remove', function (e) {
-    var routine = e.detail.routine;
-    var index = drawRoutines.indexOf(routine);
-    if (index !== -1) {
-      drawRoutines.splice(index, 1);
-    }
-  })
-
   function drawGame () {
     ctx.clearRect(-canvas.width/2, -canvas.height/2, canvas.width, canvas.height);
     for (var i=0; i<drawRoutines.length; i++) {

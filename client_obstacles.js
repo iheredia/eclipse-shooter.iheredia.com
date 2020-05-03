@@ -82,7 +82,9 @@
     }
     if (allObstaclesWentBy) {
       step = nextStepFor[step];
-      setupStep[step]();
+      if (step) {
+        setupStep[step]();
+      }
     }
     if (step) {
       updateStateTimeout = setTimeout(updateState, 10);
@@ -94,32 +96,30 @@
   }
 
   function drawRoutine() {
-    ctx.fillStyle = '#509EB8';
-    for (var i=0; i<activeObstacles.length; i++) {
-      var obstacle = activeObstacles[i];
-      ctx.translate(obstacle.position.x, obstacle.position.y);
-      ctx.rotate(Math.PI/4 + obstacle.rotation);
-      ctx.fillRect(-obstacle.size/2, -obstacle.size/2, obstacle.size, obstacle.size);
-      ctx.rotate(-Math.PI/4);
-      ctx.fillRect(-obstacle.size/2, -obstacle.size/2, obstacle.size, obstacle.size);
-      ctx.rotate(-obstacle.rotation);
-      ctx.translate(-obstacle.position.x, -obstacle.position.y);
+    if (activeObstacles && activeObstacles.length) {
+      ctx.fillStyle = '#509EB8';
+      for (var i=0; i<activeObstacles.length; i++) {
+        var obstacle = activeObstacles[i];
+        ctx.translate(obstacle.position.x, obstacle.position.y);
+        ctx.rotate(Math.PI/4 + obstacle.rotation);
+        ctx.fillRect(-obstacle.size/2, -obstacle.size/2, obstacle.size, obstacle.size);
+        ctx.rotate(-Math.PI/4);
+        ctx.fillRect(-obstacle.size/2, -obstacle.size/2, obstacle.size, obstacle.size);
+        ctx.rotate(-obstacle.rotation);
+        ctx.translate(-obstacle.position.x, -obstacle.position.y);
+      }
     }
   }
+  var registerDrawRoutineEvent = new CustomEvent('game:draw-routine:add', { detail: { routine: drawRoutine } });
+  window.dispatchEvent(registerDrawRoutineEvent);
 
   window.addEventListener('game:start', function () {
-    var registerDrawRoutineEvent = new CustomEvent('game:draw-routine:add', { detail: { routine: drawRoutine } });
-    window.dispatchEvent(registerDrawRoutineEvent);
-
     setInitialConditions();
     clearTimeout(updateStateTimeout);
     updateState();
   });
 
   window.addEventListener('game:end', function () {
-    var registerDrawRoutineEvent = new CustomEvent('game:draw-routine:remove', { detail: { routine: drawRoutine } });
-    window.dispatchEvent(registerDrawRoutineEvent);
-
     clearTimeout(updateStateTimeout);
   });
 })();
