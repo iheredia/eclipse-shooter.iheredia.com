@@ -1,3 +1,6 @@
+// TODO: so far all obstacles rotate at the same rate. Simplify logic
+// TODO: is the "alive" flag necessary for obstacles?
+
 (function () {
   var canvas = document.querySelector('#main-canvas');
   var ctx = canvas.getContext('2d');
@@ -22,7 +25,7 @@
         alive: true,
       },
       {
-        position: { x: canvas.width * 8, y: 0 },
+        position: { x: canvas.width * 7, y: 0 },
         speed: { x: -5 },
         size: 20,
         rotation: 0,
@@ -33,42 +36,154 @@
     window.dispatchEvent(registerCollisionEvent);
   }
 
-  function setupEasyObstacles() {
-    for (var i=0; i<200; i++) {
-      var size = 10 + Math.random() * 15;
-      activeObstacles.push({
+  function randomObstacle() {
+    var size = 10 + Math.random() * 15;
+    return {
+      position: {
+        x: canvas.width + Math.random() * canvas.width * 10,
+        y: (Math.random() - 0.5) * canvas.height,
+      },
+      speed: { x: - 5 - 100/size },
+      size: size,
+      rotation: 0,
+      alive: true,
+    }
+  }
+
+  function distance(obj1, obj2) {
+    return Math.sqrt(Math.pow(obj1.position.x - obj2.position.x, 2) + Math.pow(obj1.position.y - obj2.position.y, 2))
+  }
+
+  function randomGroup() {
+    var group = [];
+    var size = 3 + Math.floor(Math.random() * 5);
+    var centerObstacle = randomObstacle();
+    group.push(centerObstacle);
+    while (group.length < size) {
+      var newObstacle = {
         position: {
-          x: canvas.width + Math.random() * canvas.width * 10,
-          y: (Math.random() - 0.5) * canvas.height,
+          x: centerObstacle.position.x + Math.round(Math.random() * 10) * centerObstacle.size,
+          y: centerObstacle.position.y + Math.round((Math.random() - 0.5) * 10) * centerObstacle.size,
         },
-        speed: { x: - 5 - 100/size },
-        size: size,
+        speed: centerObstacle.speed,
+        size: centerObstacle.size,
         rotation: 0,
         alive: true,
-      })
+      };
+      var separateFromTheRest = true;
+      for (var i=0; i<group.length; i++) {
+        var savedObstacle = group[i];
+        separateFromTheRest = separateFromTheRest && distance(newObstacle, savedObstacle) > 2 * centerObstacle.size;
+      }
+      if (separateFromTheRest) {
+        group.push(newObstacle);
+      }
+    }
+    return group;
+  }
+
+  function setupSuperEasyObstacles() {
+    console.log('Super easy');
+    for (var i=0; i<100; i++) {
+      activeObstacles.push(randomObstacle())
+    }
+    var registerCollisionEvent = new CustomEvent('game:register-collision-objects', { detail: { obstacles: activeObstacles } });
+    window.dispatchEvent(registerCollisionEvent);
+  }
+
+  function setupEasyObstacles() {
+    console.log('Easy');
+    activeObstacles = []
+    for (var i=0; i<50; i++) {
+      activeObstacles = activeObstacles.concat(randomGroup());
+    }
+    var registerCollisionEvent = new CustomEvent('game:register-collision-objects', { detail: { obstacles: activeObstacles } });
+    window.dispatchEvent(registerCollisionEvent);
+  }
+
+  function setupNormalObstacles() {
+    console.log('Normal');
+    activeObstacles = []
+    for (var i=0; i<200; i++) {
+      activeObstacles.push(randomObstacle())
+    }
+    for (var j=0; j<10; j++) {
+      activeObstacles = activeObstacles.concat(randomGroup());
     }
     var registerCollisionEvent = new CustomEvent('game:register-collision-objects', { detail: { obstacles: activeObstacles } });
     window.dispatchEvent(registerCollisionEvent);
   }
 
   function setupMediumObstacles() {
-    console.log('Medium obstacles');
+    console.log('Medium');
+    activeObstacles = []
+    for (var i=0; i<250; i++) {
+      activeObstacles.push(randomObstacle())
+    }
+    for (var j=0; j<20; j++) {
+      activeObstacles = activeObstacles.concat(randomGroup());
+    }
+    var registerCollisionEvent = new CustomEvent('game:register-collision-objects', { detail: { obstacles: activeObstacles } });
+    window.dispatchEvent(registerCollisionEvent);
   }
 
   function setupDifficultObstacles() {
-    console.log('Difficult obstacles');
+    console.log('Difficult');
+    activeObstacles = []
+    for (var i=0; i<300; i++) {
+      activeObstacles.push(randomObstacle())
+    }
+    for (var j=0; j<30; j++) {
+      activeObstacles = activeObstacles.concat(randomGroup());
+    }
+    var registerCollisionEvent = new CustomEvent('game:register-collision-objects', { detail: { obstacles: activeObstacles } });
+    window.dispatchEvent(registerCollisionEvent);
+  }
+
+  function setupSuperDifficultObstacles() {
+    console.log('Super difficult');
+    activeObstacles = []
+    for (var i=0; i<350; i++) {
+      activeObstacles.push(randomObstacle())
+    }
+    for (var j=0; j<40; j++) {
+      activeObstacles = activeObstacles.concat(randomGroup());
+    }
+    var registerCollisionEvent = new CustomEvent('game:register-collision-objects', { detail: { obstacles: activeObstacles } });
+    window.dispatchEvent(registerCollisionEvent);
+  }
+
+  function setupExtremeObstacles() {
+    console.log('Extreme');
+    activeObstacles = []
+    for (var i=0; i<400; i++) {
+      activeObstacles.push(randomObstacle())
+    }
+    for (var j=0; j<50; j++) {
+      activeObstacles = activeObstacles.concat(randomGroup());
+    }
+    var registerCollisionEvent = new CustomEvent('game:register-collision-objects', { detail: { obstacles: activeObstacles } });
+    window.dispatchEvent(registerCollisionEvent);
   }
 
   var nextStepFor = {
-    initial: 'easy',
-    easy: 'medium',
-    medium: 'difficult',
-    difficult: null
+    'initial': 'super-easy',
+    'super-easy': 'easy',
+    'easy': 'normal',
+    'normal': 'medium',
+    'medium': 'difficult',
+    'difficult': 'super-difficult',
+    'super-difficult': 'extreme',
+    'extreme': null
   }
   var setupStep = {
+    'super-easy': setupSuperEasyObstacles,
     'easy': setupEasyObstacles,
+    'normal': setupNormalObstacles,
     'medium': setupMediumObstacles,
     'difficult': setupDifficultObstacles,
+    'super-difficult': setupSuperDifficultObstacles,
+    'extreme': setupExtremeObstacles,
   };
 
   var updateStateTimeout;

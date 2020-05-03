@@ -8,7 +8,7 @@
 
   window.addEventListener('game:register-collision-objects', function (e) {
     ships = ships.concat(e.detail.ships || []);
-    obstacles = obstacles.concat(e.detail.obstacles || []);
+    obstacles = e.detail.obstacles || obstacles;
   });
 
   function distance(obj1, obj2) {

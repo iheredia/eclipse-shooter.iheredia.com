@@ -12,11 +12,6 @@
     autoIncrementeScoreTimeout = setTimeout(autoIncrementScore, 100);
   }
 
-  window.addEventListener('game:space-shooter:change-score', function (e) {
-    // TODO: so far this is unused
-    score += e.detail.increase
-  });
-
   window.addEventListener('game:space-shooter:change-life', function (e) {
     const value = e.detail.life
     var life = [];
@@ -38,7 +33,6 @@
   })
 
   window.addEventListener('game:space-shooter:controls-enable', function () {
-    // TODO: this keeps triggering after game ends. Fix
     clearTimeout(autoIncrementeScoreTimeout);
     UIContainer.classList.remove('hidden');
     autoIncrementScore()
