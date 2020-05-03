@@ -21,7 +21,7 @@
         var obstacle = obstacles[j];
         var distanceBetween = distance(ship, obstacle);
         if (obstacle.alive && distanceBetween < Math.min(ship.size, obstacle.size)) {
-          obstacle.alive = false;
+          obstacle.alive = false; // TODO: avoid flagging obstacles as alive. Instead use a numbed attr in the ships
           ship.life -= 1;
           ship.alive = ship.life > 0;
           ship.blinkCounter = 100;
