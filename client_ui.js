@@ -1,14 +1,18 @@
 (function () {
+  var UIContainer = document.querySelector('#space-shooter-ui');
   var scoreContainer = document.querySelector('#space-shooter-score');
   var lifeContainer = document.querySelector('#space-shooter-life');
 
-  var score = 0;
+  var score;
+  var autoIncrementeScoreTimeout;
   function autoIncrementScore() {
     score += 1;
     scoreContainer.textContent = score.toString(16).split('').join(' ');
-    setTimeout(autoIncrementScore, 100);
+    autoIncrementeScoreTimeout = setTimeout(autoIncrementScore, 100);
   }
+
   window.addEventListener('game:space-shooter:change-score', function (e) {
+    // TODO: so far this is unused
     score += e.detail.increase
   });
 
@@ -21,8 +25,18 @@
     lifeContainer.textContent = life.join(' ');
   });
 
+  window.addEventListener('game:start', function () {
+    clearTimeout(autoIncrementeScoreTimeout);
+    score = 0;
+  })
+
+  window.addEventListener('game:end', function () {
+    UIContainer.classList.add('hidden');
+    clearTimeout(autoIncrementeScoreTimeout);
+  })
+
   window.addEventListener('game:space-shooter:controls-enable', function () {
-    document.querySelector('#space-shooter-ui').classList.remove('hidden');
+    UIContainer.classList.remove('hidden');
     autoIncrementScore()
   })
 })();
