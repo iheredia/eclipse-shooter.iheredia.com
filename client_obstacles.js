@@ -6,7 +6,6 @@
 
   var activeObstacles;
   var currentLevel;
-  var totalLevels = 8;
   function setInitialConditions() {
     currentLevel = { iteration: 0, randomObstaclesAmount: 0, randomGroupsAmount: 0 };
     activeObstacles = [
@@ -102,7 +101,7 @@
         allObstaclesWentBy = allObstaclesWentBy && obstacle.wentBy
       }
     }
-    if (allObstaclesWentBy && currentLevel.iteration < totalLevels) {
+    if (allObstaclesWentBy) {
       currentLevel.iteration += 1;
       currentLevel.randomObstaclesAmount += 20;
       currentLevel.randomGroupsAmount += 5
