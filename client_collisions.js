@@ -28,10 +28,10 @@
   function checkForCollisions() {
     for (var i=0; i<ships.length; i++) {
       var ship = ships[i];
-      if (ship.alive) {
+      if (ship.alive && !ship.numbed) {
         for (var j=0; j<obstacles.length; j++) {
           var obstacle = obstacles[j];
-          if (-canvas.width < obstacle.position.x && obstacle.position.x < canvas.width) {
+          if (-canvas.width/2 < obstacle.position.x && obstacle.position.x < canvas.width/2) {
             if (collisionCheck(ship, obstacle) && ship.processCollision) {
               ship.processCollision();
             }
