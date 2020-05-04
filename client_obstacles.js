@@ -1,4 +1,3 @@
-// TODO: so far all obstacles rotate at the same rate. Simplify logic
 // TODO: is the "alive" flag necessary for obstacles?
 
 (function () {
@@ -9,27 +8,24 @@
   var currentLevel;
   var totalLevels = 8;
   function setInitialConditions() {
-    currentLevel = { iteration: 0, randomObstaclesAmount: 60, randomGroupsAmount: 0 };
+    currentLevel = { iteration: 0, randomObstaclesAmount: 0, randomGroupsAmount: 0 };
     activeObstacles = [
       {
         position: { x: canvas.width * 5, y: - 100 },
         speed: { x: -5 },
         size: 20,
-        rotation: 0,
         alive: true,
       },
       {
         position: { x: canvas.width * 5, y: 100 },
         speed: { x: -5 },
         size: 20,
-        rotation: 0,
         alive: true,
       },
       {
         position: { x: canvas.width * 7, y: 0 },
         speed: { x: -5 },
         size: 20,
-        rotation: 0,
         alive: true,
       }
     ];
@@ -44,9 +40,8 @@
         x: canvas.width + Math.random() * canvas.width * 10,
         y: (Math.random() - 0.5) * canvas.height,
       },
-      speed: { x: - 5 - 100/size },
+      speed: { x: -1 - currentLevel.iteration/2 - 100/size },
       size: size,
-      rotation: 0,
       alive: true,
     }
   }
@@ -68,7 +63,6 @@
         },
         speed: centerObstacle.speed,
         size: centerObstacle.size,
-        rotation: 0,
         alive: true,
       };
       var separateFromTheRest = true;
@@ -100,15 +94,18 @@
     var allObstaclesWentBy = true;
     for (var i=0; i<activeObstacles.length; i++) {
       var obstacle = activeObstacles[i];
-      obstacle.position.x += obstacle.speed.x;
-      obstacle.rotation += 0.01;
-      allObstaclesWentBy = allObstaclesWentBy && obstacle.position.x < -canvas.width;
+      if (-canvas.width <= obstacle.position.x) {
+        obstacle.position.x += obstacle.speed.x;
+        if (!obstacle.wentBy) {
+          obstacle.wentBy = obstacle.position.x < -canvas.width;
+        }
+        allObstaclesWentBy = allObstaclesWentBy && obstacle.wentBy
+      }
     }
     if (allObstaclesWentBy && currentLevel.iteration < totalLevels) {
       currentLevel.iteration += 1;
-      currentLevel.randomObstaclesAmount += 30;
-      currentLevel.randomGroupsAmount += 10
-      console.log(currentLevel);
+      currentLevel.randomObstaclesAmount += 20;
+      currentLevel.randomGroupsAmount += 5
       setupRandomObstacles(currentLevel.randomObstaclesAmount, currentLevel.randomGroupsAmount)
 
       if (currentLevel.iteration === 4) {
@@ -116,45 +113,7 @@
         window.dispatchEvent(eclipseEvent);
       }
     }
-
-    if (currentLevel.iteration === totalLevels) {
-      // TODO: trigger game won event
-    } else {
-      updateStateTimeout = setTimeout(updateState, 10);
-    }
-  }
-
-  function drawStar(obstacle) {
-    var centerX = obstacle.position.x;
-    var centerY = obstacle.position.y;
-    var spikes = 16;
-    var rotation = obstacle.rotation;
-    var step = Math.PI / spikes;
-    var innerRadius = obstacle.size * 2 / 3;
-    var outerRadius = obstacle.size;
-
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, innerRadius, 0, Math.PI * 2);
-    ctx.closePath();
-    ctx.fill();
-
-    var x = centerX;
-    var y = centerY;
-    ctx.beginPath();
-    ctx.moveTo(centerX + Math.cos(rotation) * outerRadius, centerY + Math.sin(rotation) * outerRadius)
-    for (var i = 0; i < spikes; i++) {
-      x = centerX + Math.cos(rotation) * outerRadius;
-      y = centerY + Math.sin(rotation) * outerRadius;
-      ctx.lineTo(x, y)
-      rotation += step
-
-      x = centerX + Math.cos(rotation) * innerRadius;
-      y = centerY + Math.sin(rotation) * innerRadius;
-      ctx.lineTo(x, y)
-      rotation += step
-    }
-    ctx.closePath();
-    ctx.fill();
+    updateStateTimeout = setTimeout(updateState, 10);
   }
 
   function drawRoutine() {
@@ -163,7 +122,12 @@
       ctx.globalCompositeOperation = 'xor';
       for (var i=0; i<activeObstacles.length; i++) {
         var obstacle = activeObstacles[i];
-        drawStar(obstacle)
+        if (-canvas.width < obstacle.position.x && obstacle.position.x < canvas.width) {
+          ctx.beginPath();
+          ctx.arc(obstacle.position.x, obstacle.position.y, obstacle.size, 0, Math.PI * 2);
+          ctx.closePath();
+          ctx.fill();
+        }
       }
     }
   }
