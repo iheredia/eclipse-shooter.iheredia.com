@@ -40,7 +40,7 @@ button {
     color: #ff6347;
     border-radius: 0.3em;
     border: none;
-    padding: 0.5em 1em;
+    padding: 0.2em 0.6em;
     cursor: pointer;
     position: relative;
 }
@@ -53,6 +53,10 @@ button:active {
     opacity: 0.8;
 }
 
+button:disabled {
+    opacity: 0.5;
+}
+
 .game-active ~ .game-menu,
 .game-inactive ~ #game-over-menu,
 .game-over ~ #start-menu {
@@ -60,4 +64,44 @@ button:active {
     transform: translate(-50%, -70%);
     user-select: none;
     pointer-events: none;
+}
+
+#submit-dialog.hidden,
+#high-scores.hidden {
+    display: none;
+}
+
+#score-name {
+    background: none;
+    color: white;
+    font-size: inherit;
+    padding: 0.2em 0.6em;
+    border: solid 1px;
+    margin: 1em 0.5em;
+    border-radius: 6px;
+}
+
+#score-name:disabled {
+    opacity: 0.5;
+}
+
+input#score-name::placeholder {
+    color: white;
+    opacity: 0.5;
+}
+
+#high-score-list {
+    margin-bottom: 1em;
+}
+
+.score-name,
+.score-value {
+    display: inline-block;
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.score-name {
+    margin-right: 0.5em;
 }

@@ -21,7 +21,17 @@
     </div>
     <div id="game-over-menu" class="game-menu">
         <h1>Game over</h1>
-        <p>You ended the game with score: <span id="game-over-score"></span></p>
+        <div id="submit-dialog">
+            <p>You ended the game with score: <span id="game-over-score"></span></p>
+            <p>
+                <label>Submit your score: <br /> <input id="score-name" type="text" placeholder="name" /></label>
+                <button id="submit-button" disabled>SUBMIT</button>
+            </p>
+        </div>
+        <div id="high-scores" class="hidden">
+            <p>High scores</p>
+            <div id="high-score-list"></div>
+        </div>
         <button id="restart-button">RESTART</button>
     </div>
     <div id="space-shooter-ui" class="hidden">
