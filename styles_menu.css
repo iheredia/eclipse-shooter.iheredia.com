@@ -79,6 +79,8 @@ button:disabled {
     border: solid 1px;
     margin: 1em 0.5em;
     border-radius: 6px;
+    text-shadow: -1px 1px #ff6347, 1px 1px #ff6347, 1px -1px #ff6347, -1px -1px #ff6347;
+    box-shadow: -1px 1px #ff6347, 1px 1px #ff6347, 1px -1px #ff6347, -1px -1px #ff6347;
 }
 
 #score-name:disabled {

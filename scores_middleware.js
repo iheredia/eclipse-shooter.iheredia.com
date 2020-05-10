@@ -10,8 +10,17 @@ const getHighScores = async () => {
 }
 
 router.post('/score', async (req, res) => {
+  let existingScore;
   const { name, score } = req.query;
-  await db.put(name, parseInt(score));
+  const parsedScore = parseInt(score);
+  try {
+    existingScore = await db.get(name)
+  } catch (e) {
+    console.log(e)
+  }
+  if (existingScore && existingScore < parsedScore) {
+    await db.put(name, parsedScore);
+  }
   const highScores = await getHighScores();
   res.json(highScores);
 });
