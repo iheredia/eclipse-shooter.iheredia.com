@@ -1,5 +1,6 @@
 // TODO: canvas resolution should be independent from the display resolution
 // TODO: game units should be independent from canvas resolution. Time units should be based on timestamps. Spatial units should be based on ??
+// TODO: add music
 
 (function () {
   var canvas = document.querySelector('#main-canvas');

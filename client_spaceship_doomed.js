@@ -1,3 +1,5 @@
+// TODO: don't show the animation after game restarts or give the option of skipping it
+
 (function () {
   var canvas = document.querySelector('#main-canvas');
 

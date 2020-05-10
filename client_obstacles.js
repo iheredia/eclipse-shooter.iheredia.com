@@ -1,4 +1,5 @@
 // TODO: is the "alive" flag necessary for obstacles?
+// TODO: smarter obstacles
 
 (function () {
   var canvas = document.querySelector('#main-canvas');
