@@ -1,24 +1,15 @@
 {
-  "name": "devhacks-challenge",
+  "name": "eclipse-shooter.iheredia.com",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start-dev": "DETA_EMULATED=true nodemon emulate-deta.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/iheredia/devhacks-challenge.git"
+    "dev": "cd public && http-server"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/iheredia/devhacks-challenge/issues"
-  },
-  "homepage": "https://github.com/iheredia/devhacks-challenge#readme",
   "dependencies": {
-    "express": "^4.17.1",
-    "nodemon": "^2.0.3"
+    "http-server": "^14.1.1"
   }
 }
